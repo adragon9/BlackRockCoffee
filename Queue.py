@@ -2,6 +2,7 @@ from Classes import Order
 import tkinter as tk
 import threading
 import time
+from random import randrange
 
 # Global variables
 coffee_menu = {
@@ -50,7 +51,7 @@ def update_queue():
 # Function to process orders from the queue every 10 seconds
 def process_orders():
     while True:
-        time.sleep(10)
+        time.sleep(randrange(1, 10))
         with lock:
             if queue:
                 queue.pop(0)  # Remove the first order in the queue
@@ -60,6 +61,7 @@ def process_orders():
 # Create the main application window
 root = tk.Tk()
 root.title("Coffee Order Queue")
+root.focus_force()
 
 # Coffee options
 coffee_label = tk.Label(root, text="Choose Coffee:")
@@ -97,7 +99,7 @@ queue_text.pack()
 # Start a separate thread to update the queue
 def queue_updater():
     while True:
-        time.sleep(5)
+        time.sleep(10)
         update_queue()
 
 
