@@ -39,9 +39,15 @@ def place_order():
         with lock:
             orders.append(
                 Order(order_number, coffee_choice, hot_or_iced, special_request, coffee_menu.get(coffee_choice)))
+
             queue.append(
                 f"Order #{order_number}:{orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), "
                 f"Special Request: {orders[order_index].special_requests}")
+
+            write_order_to_file(
+                f"Order #{order_number}:{orders[order_index].coffee_name} ({orders[order_index].coffee_temp}),"
+                f"Special Request: {orders[order_index].special_requests}")
+
             order_number += 1
             update_queue()
 
@@ -49,6 +55,12 @@ def place_order():
         coffee_var.set("Espresso")
         hot_or_iced_var.set("Hot")
         special_request_entry.delete(0, tk.END)
+
+
+# Function to write the order to a text file
+def write_order_to_file(order):
+    with open("orders.txt", "a") as file:
+        file.write(order + "\n")
 
 
 # Function to update the queue display
