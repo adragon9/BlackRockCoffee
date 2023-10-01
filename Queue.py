@@ -73,38 +73,39 @@ def process_orders():
 # Create the main application window
 root = tk.Tk()
 root.title("Coffee Order Queue")
-root.focus_force()
 
 # Coffee options
-coffee_label = tk.Label(root, text="Choose Coffee:")
+coffee_label = tk.Label(root, text="Choose Coffee:", font=("Helvetica", 14))
 coffee_label.pack()
 coffee_var = tk.StringVar(root)
 coffee_var.set(list(coffee_menu.keys())[0])
 coffee_option = tk.OptionMenu(root, coffee_var, *coffee_menu.keys())
+coffee_option.config(font=("Helvetica", 12))
 coffee_option.pack()
 
 # Hot or Iced
-hot_or_iced_label = tk.Label(root, text="Hot or Iced:")
+hot_or_iced_label = tk.Label(root, text="Hot or Iced:", font=("Helvetica", 14))
 hot_or_iced_label.pack()
 hot_or_iced_var = tk.StringVar(root)
 hot_or_iced_var.set("Hot")
 hot_or_iced_option = tk.OptionMenu(root, hot_or_iced_var, "Hot", "Iced")
+hot_or_iced_option.config(font=("Helvetica", 12))
 hot_or_iced_option.pack()
 
 # Special Request
-special_request_label = tk.Label(root, text="Special Request:")
+special_request_label = tk.Label(root, text="Special Request:", font=("Helvetica", 14))
 special_request_label.pack()
-special_request_entry = tk.Entry(root)
+special_request_entry = tk.Entry(root, font=("Helvetica", 12))
 special_request_entry.pack()
 
 # Place Order Button
-place_order_button = tk.Button(root, text="Place Order", command=place_order)
+place_order_button = tk.Button(root, text="Place Order", command=place_order, font=("Helvetica", 14))
 place_order_button.pack()
 
 # Queue Display
-queue_label = tk.Label(root, text="Current Queue:")
+queue_label = tk.Label(root, text="Current Queue:", font=("Helvetica", 16, "bold"))
 queue_label.pack()
-queue_text = tk.Text(root, height=10, width=80, state=tk.DISABLED)
+queue_text = tk.Text(root, height=10, width=40, state=tk.DISABLED, font=("Helvetica", 12))
 queue_text.pack()
 
 queue_thread = threading.Thread(target=queue_updater)
