@@ -14,7 +14,7 @@ queue = []
 lock = threading.Lock()
 order_number = 1
 
-# Function to add an order to the queue
+# Function to add an order to the queue and write it to a text file
 def place_order():
     global order_number
     coffee_choice = coffee_var.get()
@@ -23,14 +23,21 @@ def place_order():
 
     if coffee_choice:
         with lock:
-            queue.append(f"Order #{order_number}: {coffee_choice} ({hot_or_iced}), Special Request: {special_request}")
+            order = f"Order #{order_number}: {coffee_choice} ({hot_or_iced}), Special Request: {special_request}"
+            queue.append(order)
             order_number += 1
             update_queue()
+            write_order_to_file(order)
         
         # Clear the input fields
         coffee_var.set("")
         hot_or_iced_var.set("Hot")
         special_request_entry.delete(0, tk.END)
+
+# Function to write the order to a text file
+def write_order_to_file(order):
+    with open("orders.txt", "a") as file:
+        file.write(order + "\n")
 
 # Function to update the queue display
 def update_queue():
