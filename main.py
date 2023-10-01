@@ -12,8 +12,8 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Black Rock Coffee App")
 
-    r_height = 320
-    r_width = 640
+    r_height = 50
+    r_width = 150
 
     root.configure(padx=r_width, pady=r_height)
 

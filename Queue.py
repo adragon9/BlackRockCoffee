@@ -4,6 +4,8 @@ import threading
 import time
 from random import randrange
 
+# Personal Note: Most of this was made by Landon
+
 # Global variables
 coffee_menu = {
     "Espresso": 3.50,
@@ -18,6 +20,13 @@ lock = threading.Lock()
 order_number = 1
 
 
+# Start a separate thread to update the queue
+def queue_updater():
+    while True:
+        time.sleep(10)
+        update_queue()
+
+
 # Function to add an order to the queue
 def place_order():
     global order_number
@@ -28,8 +37,11 @@ def place_order():
 
     if coffee_choice:
         with lock:
-            orders.append(Order(order_number, coffee_choice, hot_or_iced, special_request, coffee_menu.get(coffee_choice)))
-            queue.append(f"Order #{order_number}:{orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), Special Request: {orders[order_index].special_requests}")
+            orders.append(
+                Order(order_number, coffee_choice, hot_or_iced, special_request, coffee_menu.get(coffee_choice)))
+            queue.append(
+                f"Order #{order_number}:{orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), "
+                f"Special Request: {orders[order_index].special_requests}")
             order_number += 1
             update_queue()
 
@@ -94,14 +106,6 @@ queue_label = tk.Label(root, text="Current Queue:")
 queue_label.pack()
 queue_text = tk.Text(root, height=10, width=80, state=tk.DISABLED)
 queue_text.pack()
-
-
-# Start a separate thread to update the queue
-def queue_updater():
-    while True:
-        time.sleep(10)
-        update_queue()
-
 
 queue_thread = threading.Thread(target=queue_updater)
 queue_thread.daemon = True
