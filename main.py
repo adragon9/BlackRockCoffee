@@ -12,7 +12,9 @@ if __name__ == "__main__":
     # I have set up the main window to be able to spawn other windows that can take exclusive control
     # When making a new window in a different script be sure to use tk.TopLevel() instead of tk.Tk()
     splash = tk.Tk()
+
     splash.title("Black Rock")
+    splash.iconbitmap("img/coffee-ico.ico")
 
     # Come now, must the customer be able to control window size?
     splash.resizable(width=False, height=False)

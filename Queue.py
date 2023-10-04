@@ -85,6 +85,7 @@ def process_orders():
 # Create the main application window
 root = tk.Toplevel()
 root.title("Coffee Order Queue")
+root.iconbitmap("img/coffee-ico.ico")
 
 # Lock the previous window so they can keep spawning windows without closing this one
 root.grab_set()

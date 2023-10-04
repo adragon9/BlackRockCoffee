@@ -36,6 +36,14 @@ class EntryBox(tk.Tk):
     Allows for one to make an entry box by inserting the master window, width, grid row, and grid column
     """
     def __init__(self, master=None, width=None, y=None, x=None, relief=None, font=None):
+        """
+        :param master:
+        :param width:
+        :param y:
+        :param x:
+        :param relief:
+        :param font:
+        """
         self.entryBox = None
         self.master = master
         self.width = width
@@ -53,6 +61,8 @@ class EntryBox(tk.Tk):
                                  background="#f0f0f0")
         # self.entryBox.grid(row=self.row, column=self.column)
         self.entryBox.place(x=self.x, y=self.y)
+
+        return self.entryBox
 
     def get_box(self):
         """
