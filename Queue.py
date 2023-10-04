@@ -1,4 +1,4 @@
-from Classes import Order
+from Classes import Order, CustButton
 import tkinter as tk
 import threading
 import time
@@ -83,8 +83,11 @@ def process_orders():
 
 
 # Create the main application window
-root = tk.Tk()
+root = tk.Toplevel()
 root.title("Coffee Order Queue")
+
+# Lock the previous window so they can keep spawning windows without closing this one
+root.grab_set()
 
 # Coffee options
 coffee_label = tk.Label(root, text="Choose Coffee:", font=("Helvetica", 14))
@@ -111,8 +114,10 @@ special_request_entry = tk.Entry(root, font=("Helvetica", 12))
 special_request_entry.pack()
 
 # Place Order Button
-place_order_button = tk.Button(root, text="Place Order", command=place_order, font=("Helvetica", 14))
-place_order_button.pack()
+place_order_button = CustButton(root, "Place Order", command=place_order, pack=True)
+place_order_button.initialize_button()
+# place_order_button = tk.Button(root, text="Place Order", command=place_order, font=("Helvetica", 14))
+# place_order_button.pack()
 
 # Queue Display
 queue_label = tk.Label(root, text="Current Queue:", font=("Helvetica", 16, "bold"))

@@ -1,0 +1,20 @@
+- Classes.py
+    - I added custom classes to streamline creating two tkinter objects, entry boxes and buttons
+        - On request I can add more objects in this fashion
+
+- main.py
+    - I changed the window implementation so that the window spawned from main.py is a root window
+      this will allow us to easily implement any new windows we need in the future.
+
+    - I changed how the splash page's layout works, it now uses the canvas functions for more fine-tuned
+      control over object placement in the window.
+        - As a side note I also locked the window from being resized.
+
+- Queue.py
+    - I changed root = tk.Tk() to root = tk.TopLevel() to make it the focus window upon pressing the button
+      to create it.
+
+    - I added root.grab_set() which essentially makes it so you can only interact with that window even if
+      other windows are open.
+
+- I also added a changelog because I made to many changes to put in the commit comments
