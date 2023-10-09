@@ -20,6 +20,9 @@ class Order:
 
         self.special_requests = special_requests
 
+        if self.special_requests == "":
+            self.special_requests = "NO SPECIAL REQUESTS"
+
         try:
             self.coffee_price = float(coffee_price)
         except TypeError:

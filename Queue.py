@@ -1,3 +1,5 @@
+import datetime
+
 from Classes import Order, CustButton
 import tkinter as tk
 import threading
@@ -41,12 +43,14 @@ def place_order():
                 Order(order_number, coffee_choice, hot_or_iced, special_request, coffee_menu.get(coffee_choice)))
 
             queue.append(
-                f"Order #{order_number}:{orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), "
-                f"Special Request: {orders[order_index].special_requests}")
+                f"Order #{order_number}: {orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), "
+                f"Special Request: {orders[order_index].special_requests}, "
+                f"Cost: ${orders[order_index].coffee_price}")
 
             write_order_to_file(
-                f"Order #{order_number}:{orders[order_index].coffee_name} ({orders[order_index].coffee_temp}),"
-                f"Special Request: {orders[order_index].special_requests}")
+                f"Order #{order_number}: {orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), "
+                f"Special Request: {orders[order_index].special_requests}, "
+                f"Cost: ${orders[order_index].coffee_price}")
 
             order_number += 1
             update_queue()
@@ -60,7 +64,7 @@ def place_order():
 # Function to write the order to a text file
 def write_order_to_file(order):
     with open("orders.txt", "a") as file:
-        file.write(order + "\n")
+        file.write(f"{datetime.datetime.now()}: {order}\n")
 
 
 # Function to update the queue display
@@ -123,7 +127,7 @@ place_order_button.initialize_button()
 # Queue Display
 queue_label = tk.Label(root, text="Current Queue:", font=("Helvetica", 16, "bold"))
 queue_label.pack()
-queue_text = tk.Text(root, height=10, width=40, state=tk.DISABLED, font=("Helvetica", 12))
+queue_text = tk.Text(root, height=15, width=120, state=tk.DISABLED, font=("Helvetica", 12))
 queue_text.pack()
 
 queue_thread = threading.Thread(target=queue_updater)
