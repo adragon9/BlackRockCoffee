@@ -1,4 +1,6 @@
-from Classes import Order, CustButton
+import datetime
+
+from Classes import Order, CustButton, EntryBox
 import tkinter as tk
 import threading
 import time
@@ -32,7 +34,7 @@ def place_order():
     global order_number
     coffee_choice = coffee_var.get()
     hot_or_iced = hot_or_iced_var.get()
-    special_request = special_request_entry.get()
+    special_request = special_request_entry.get_box().get()
     order_index = order_number - 1
 
     if coffee_choice:
@@ -41,12 +43,14 @@ def place_order():
                 Order(order_number, coffee_choice, hot_or_iced, special_request, coffee_menu.get(coffee_choice)))
 
             queue.append(
-                f"Order #{order_number}:{orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), "
-                f"Special Request: {orders[order_index].special_requests}")
+                f"Order #{order_number}: {orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), "
+                f"Special Request: {orders[order_index].special_requests}, "
+                f"Cost: ${orders[order_index].coffee_price}")
 
             write_order_to_file(
-                f"Order #{order_number}:{orders[order_index].coffee_name} ({orders[order_index].coffee_temp}),"
-                f"Special Request: {orders[order_index].special_requests}")
+                f"Order #{order_number}: {orders[order_index].coffee_name} ({orders[order_index].coffee_temp}), "
+                f"Special Request: {orders[order_index].special_requests}, "
+                f"Cost: ${orders[order_index].coffee_price}")
 
             order_number += 1
             update_queue()
@@ -54,13 +58,13 @@ def place_order():
         # Clear the input fields
         coffee_var.set("Espresso")
         hot_or_iced_var.set("Hot")
-        special_request_entry.delete(0, tk.END)
+        special_request_entry.get_box().delete(0, tk.END)
 
 
 # Function to write the order to a text file
 def write_order_to_file(order):
     with open("orders.txt", "a") as file:
-        file.write(order + "\n")
+        file.write(f"{datetime.datetime.now()}: {order}\n")
 
 
 # Function to update the queue display
@@ -86,8 +90,11 @@ def process_orders():
 root = tk.Toplevel()
 root.title("Coffee Order Queue")
 root.iconbitmap("img/coffee-ico.ico")
+
+# No resizing the window
 root.resizable(width=False, height=False)
-# Lock the previous window so they can keep spawning windows without closing this one
+
+# Lock the previous window, so they can keep spawning windows without closing this one
 root.grab_set()
 
 # Coffee options
@@ -111,8 +118,8 @@ hot_or_iced_option.pack()
 # Special Request
 special_request_label = tk.Label(root, text="Special Request:", font=("Helvetica", 14))
 special_request_label.pack()
-special_request_entry = tk.Entry(root, font=("Helvetica", 12))
-special_request_entry.pack()
+special_request_entry = EntryBox(root, 25, font=("Helvetica", 12))
+special_request_entry.initialize_box(p=True)
 
 # Place Order Button
 place_order_button = CustButton(root, "Place Order", command=place_order, pack=True)
@@ -123,7 +130,7 @@ place_order_button.initialize_button()
 # Queue Display
 queue_label = tk.Label(root, text="Current Queue:", font=("Helvetica", 16, "bold"))
 queue_label.pack()
-queue_text = tk.Text(root, height=10, width=40, state=tk.DISABLED, font=("Helvetica", 12))
+queue_text = tk.Text(root, height=15, width=120, state=tk.DISABLED, font=("Helvetica", 12))
 queue_text.pack()
 
 queue_thread = threading.Thread(target=queue_updater)

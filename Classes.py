@@ -20,6 +20,9 @@ class Order:
 
         self.special_requests = special_requests
 
+        if self.special_requests == "":
+            self.special_requests = "NO SPECIAL REQUESTS"
+
         try:
             self.coffee_price = float(coffee_price)
         except TypeError:
@@ -35,6 +38,7 @@ class EntryBox(tk.Tk):
     """
     Allows for one to make an entry box by inserting the master window, width, grid row, and grid column
     """
+
     def __init__(self, master=None, width=None, y=None, x=None, relief=None, font=None):
         """
         :param master:
@@ -52,15 +56,20 @@ class EntryBox(tk.Tk):
         self.relief = relief
         self.font = font
 
-    def initialize_box(self):
+    def initialize_box(self, p=False):
         """
         initialize_box() Initializes the entry box by calling tk's entry box function, and grid function
         Relief types: raised, sunken, solid, flat, ridge, groove
+        p is True or False, determines whether the box is initialized with pack()
+        :param p:
         """
         self.entryBox = tk.Entry(self.master, width=self.width, relief=self.relief, font=self.font,
                                  background="#f0f0f0")
         # self.entryBox.grid(row=self.row, column=self.column)
-        self.entryBox.place(x=self.x, y=self.y)
+        if p:
+            self.entryBox.pack()
+        else:
+            self.entryBox.place(x=self.x, y=self.y)
 
         return self.entryBox
 
@@ -79,7 +88,8 @@ class CustButton(tk.Tk):
     and the buttons padx and pady
     """
 
-    def __init__(self, master=None, text=None, width=None, y=None, x=None, command=None, padx=None, pady=None, pack=False):
+    def __init__(self, master=None, text=None, width=None, y=None, x=None, command=None, padx=None, pady=None,
+                 pack=False):
         self.button = None
         self.master = master
         self.text = text
