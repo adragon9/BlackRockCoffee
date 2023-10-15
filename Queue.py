@@ -1,6 +1,6 @@
 import datetime
 
-from Classes import Order, CustButton
+from Classes import Order, CustButton, EntryBox
 import tkinter as tk
 import threading
 import time
@@ -90,8 +90,11 @@ def process_orders():
 root = tk.Toplevel()
 root.title("Coffee Order Queue")
 root.iconbitmap("img/coffee-ico.ico")
+
+# No resizing the window
 root.resizable(width=False, height=False)
-# Lock the previous window so they can keep spawning windows without closing this one
+
+# Lock the previous window, so they can keep spawning windows without closing this one
 root.grab_set()
 
 # Coffee options
@@ -115,8 +118,8 @@ hot_or_iced_option.pack()
 # Special Request
 special_request_label = tk.Label(root, text="Special Request:", font=("Helvetica", 14))
 special_request_label.pack()
-special_request_entry = tk.Entry(root, font=("Helvetica", 12))
-special_request_entry.pack()
+special_request_entry = EntryBox(root, 25, font=("Helvetica", 12))
+special_request_entry.initialize_box(p=True)
 
 # Place Order Button
 place_order_button = CustButton(root, "Place Order", command=place_order, pack=True)
