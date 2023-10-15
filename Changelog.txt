@@ -32,7 +32,6 @@
     - Added a timestamp to the log so that you can actually tell when an order was placed
     - Edited the formatting a little for the log
 
-
 (10/15/2023)
 - Classes.py
     - Added the ability to initialize the EntryBox packed by passing True or False into the function
