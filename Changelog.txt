@@ -1,3 +1,4 @@
+(10/4/2023)
 - Classes.py
     - I added custom classes to streamline creating two tkinter objects, entry boxes and buttons
         - On request I can add more objects in this fashion
@@ -18,3 +19,22 @@
       other windows are open.
 
 - I also added a changelog because I made to many changes to put in the commit comments
+
+(10/9/2023)
+- Classes.py
+    - Made it so that if nothing is entered for the special orders it displays "NO SPECIAL REQUESTS" instead of being blank
+
+- Queue.py
+    - Updated the queue display size (much wider, slightly taller)
+    - Locked the window size for the queue window
+    - Made it so that the cost is displayed in the queue display
+    - Made it so that the cost is in the text log
+    - Added a timestamp to the log so that you can actually tell when an order was placed
+    - Edited the formatting a little for the log
+
+(10/15/2023)
+- Classes.py
+    - Added the ability to initialize the EntryBox packed by passing True or False into the function
+
+- Queue.py
+    - Updated the special orders box to use the custom EntryBox class
